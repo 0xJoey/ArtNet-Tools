@@ -47,8 +47,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Art-Net">
-      <HintPath>..\..\Art-Net\Art-Net\bin\Debug\Art-Net.dll</HintPath>
+    <Reference Include="ArtLib">
+      <HintPath>..\..\ArtLib.NET\ArtLib.NET\bin\Debug\ArtLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
