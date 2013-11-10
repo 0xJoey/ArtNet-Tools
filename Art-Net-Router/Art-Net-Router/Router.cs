@@ -13,6 +13,7 @@ namespace Art_Net_Router
     {
 
         public static int Verbosity = 5;
+        public static bool Monitoring = false;
 
         Dictionary<Int32, List<Int32>> RoutingTable;
         ArtLib.Transmitter Transmitter;
@@ -46,6 +47,18 @@ namespace Art_Net_Router
             }
             Message(4, "Packet from universe " + universe);
             Data[12] = Sequence;
+
+            //If Monitoring, send data to wildcard
+            if (Monitoring)
+            {
+                List<IPEndPoint> Wildcard = GetRemoteEndPoints(-1);
+                foreach (IPEndPoint EndPoint in Wildcard)
+                {
+                    SendPacket(Data, EndPoint);
+                }
+            }
+
+            //Change universe to 0, so the lamps listen, goddammit.
             Data[14] = 0;
             Data[15] = 0;
             foreach (IPEndPoint EndPoint in RemoteEndPoints)
@@ -56,8 +69,8 @@ namespace Art_Net_Router
 
         void SendPacket(byte[] Data, IPEndPoint RemoteEndPoint)
         {
-            if (RemoteEndPoint.Address.Equals(LocalIPAddress()))
-                return;
+            //if (RemoteEndPoint.Address.Equals(LocalIPAddress()))
+            //    return;
             Message(5, "\tIn: [uni] -> " + RemoteEndPoint + "[0]");
             Transmitter.sendRaw(Data, RemoteEndPoint);
         }

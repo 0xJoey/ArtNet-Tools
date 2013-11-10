@@ -45,11 +45,20 @@ namespace Art_Net_Router
                     listenPort = Int32.Parse(Tokens[1]);
                 else if (Tokens[0].ToLower().Equals("transmitting_port"))
                     sendPort = Int32.Parse(Tokens[1]);
+                else if (Tokens[0].ToLower().Equals("monitoring"))
+                {
+                    Router.Monitoring = Boolean.Parse(Tokens[1].ToLower());
+                    Message(3, "Monitoring enabled!");
+                }
                 else if (Tokens[0].ToLower().Equals("log_level"))
                     Verbosity = Router.Verbosity = Int32.Parse(Tokens[1]);
                 else
                 {
-                    int Key = Int32.Parse(Tokens[0]);
+                    int Key = -1;
+                    if (!Tokens[0].ToLower().Equals("m"))
+                    {
+                        Key = Int32.Parse(Tokens[0]);
+                    }
                     Tokens = Tokens[1].Split(',');
                     List<Int32> SubUniverses = new List<Int32>();
                     foreach (string Value in Tokens)
